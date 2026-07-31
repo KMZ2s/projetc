@@ -1,0 +1,38 @@
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div>
+            <h4>INSTITUCIONAL</h4>
+            <p>Nós usamos a criptografia SSL para garantir que suas informações de pagamento sejam 100% protegidas.</p>
+        </div>
+        <div>
+            <h4>INSTITUCIONAL</h4>
+            <a href="{{ url('/') }}">Início</a>
+            <a href="mailto:contato@emporiocacau.store">Contato</a>
+        </div>
+        <div>
+            <h4>POLÍTICAS</h4>
+            <a href="{{ url('/pages/privacidade') }}">Política de Privacidade</a>
+            <a href="{{ url('/pages/termos') }}">Termos de Uso</a>
+            <a href="{{ url('/pages/trocas') }}">Trocas e Devoluções</a>
+        </div>
+    </div>
+    <div class="container footer-copy">
+        <p>© {{ "now"|date('Y') }} Empório Cacau todos os direitos reservados.</p>
+        <p>CNPJ: 17.265.193/0001-05.</p>
+    </div>
+    <div class="container footer-payments">
+        <div>
+            <h5>FORMAS DE PAGAMENTO</h5>
+            <div class="payment-icons">
+                {% for card in ['visa','mastercard','AMEX','elo','hipercard','PIX'] %}
+                    <img src="{{ asset('checkout-assets/img/card-flags/' ~ card ~ '.svg') }}" alt="{{ card }}">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="security-seals">
+            <img src="{{ asset('themes/default/assets/images/emporio/norton-secured-C5CyPCyB.png') }}" alt="Norton Secured">
+            <img src="{{ asset('themes/default/assets/images/emporio/reclame-aqui-w2wSUoK9.png') }}" alt="Reclame Aqui">
+            <img src="{{ asset('themes/default/assets/images/emporio/google-safe-site-QMP-eZIW.png') }}" alt="Google Site Seguro">
+        </div>
+    </div>
+</footer>

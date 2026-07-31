@@ -1,0 +1,9 @@
+{% extends "layout/theme.twig" %}
+
+{% block title %}{{ settings.meta_title ?? 'Minha Loja' }}{% endblock %}
+
+{% block content %}
+    {% include 'sections/hero.twig' %}
+    {% include 'sections/featured-products.twig' %}
+    {% include 'sections/features-bar.twig' %}
+{% endblock %}

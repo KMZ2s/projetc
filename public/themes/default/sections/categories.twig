@@ -1,0 +1,43 @@
+{% if categories|length > 0 %}
+<section class="categories-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Categorias</h2>
+            <a href="{{ url('/produtos') }}" class="section-header__link">
+                Ver tudo
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+
+        <div class="categories-grid">
+            {% for category in categories %}
+                <a href="{{ url('/colecao/' ~ category.slug) }}" class="category-card">
+                    <div class="category-card__image-wrap">
+                        {% if category.image %}
+                            <img src="{{ asset('storage/' ~ category.image) }}"
+                                 alt="{{ category.name }}"
+                                 class="category-card__image"
+                                 loading="lazy">
+                        {% else %}
+                            <div class="category-card__image category-card__image--placeholder">
+                                <div class="category-card__placeholder-icon">
+                                    {{ category.name|slice(0, 1)|upper }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="category-card__overlay"></div>
+                    </div>
+                    <div class="category-card__content">
+                        <h3 class="category-card__name">{{ category.name }}</h3>
+                        <span class="category-card__count">
+                            {{ category.products_count ?? '' }}
+                        </span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

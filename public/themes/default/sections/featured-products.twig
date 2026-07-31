@@ -1,0 +1,43 @@
+<section class="catalog-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">APROVEITE AGORA!</h2>
+            <a href="{{ url('/produtos') }}">Ver mais</a>
+        </div>
+        {% if offer_products|length > 0 %}
+            <div class="products-grid products-grid--five">
+                {% for product in offer_products %}
+                    {% include 'snippets/product-card.twig' with { product: product } %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="catalog-section">
+    <div class="container">
+        <div class="section-header"><h2 class="section-title">Mais Vendidos</h2></div>
+        {% if best_sellers|length > 0 %}
+            <div class="products-grid products-grid--four">
+                {% for product in best_sellers %}
+                    {% include 'snippets/product-card.twig' with { product: product } %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="section-cta"><a class="btn btn-primary" href="{{ url('/mais-vendidos') }}">VER MAIS</a></div>
+    </div>
+</section>
+
+<section class="catalog-section">
+    <div class="container">
+        <div class="section-header"><h2 class="section-title">Novidades</h2></div>
+        {% if new_products|length > 0 %}
+            <div class="products-grid products-grid--five products-grid--wrap">
+                {% for product in new_products %}
+                    {% include 'snippets/product-card.twig' with { product: product } %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="section-cta"><a class="btn btn-primary" href="{{ url('/produtos') }}">VER MAIS</a></div>
+    </div>
+</section>

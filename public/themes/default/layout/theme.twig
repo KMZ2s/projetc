@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="description" content="{{ settings.meta_description ?? '' }}">
+    <title>{% block title %}{{ settings.meta_title ?? 'Minha Loja' }}{% endblock %}</title>
+
+    {% if settings.favicon %}
+        <link rel="icon" href="{{ asset('storage/' ~ settings.favicon) }}">
+    {% endif %}
+
+    <meta name="theme-color" content="#4b2819">
+
+    {% set tracking_config_safe = tracking_config|default({
+        integrations: [],
+        utmify_script_enabled: false
+    }) %}
+    {% set tracking_context_safe = tracking_context|default({ event: 'page_view' }) %}
+    <script>
+    (() => {
+        const decodeJsonBase64 = (encoded) => {
+            const bytes = Uint8Array.from(atob(encoded), char => char.charCodeAt(0));
+            return JSON.parse(new TextDecoder().decode(bytes));
+        };
+
+        window.REPLICANTFY_TRACKING_CONFIG = decodeJsonBase64('{{ tracking_config_safe|json_b64 }}');
+        window.REPLICANTFY_TRACKING_CONTEXT = decodeJsonBase64('{{ tracking_context_safe|json_b64 }}');
+    })();
+    </script>
+    {% if tracking_config_safe.utmify_script_enabled %}
+        <script
+            src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+            data-utmify-prevent-xcod-sck
+            data-utmify-prevent-subids
+            async
+            defer
+        ></script>
+    {% endif %}
+    <script src="{{ asset('tracking-assets/tracking.js') }}" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('themes/default/assets/css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+{% include 'sections/announcement-bar.twig' %}
+{% include 'sections/header.twig' %}
+
+<main class="site-main" id="main-content">
+    {% block content %}{% endblock %}
+</main>
+
+{% include 'sections/footer.twig' %}
+
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+window.CART_ROUTES = {
+    show:         '{{ url('/cart.json') }}',
+    add:          '{{ url('/cart/add.json') }}',
+    update:       '{{ url('/cart/update.json') }}',
+    remove:       '{{ url('/cart/items') }}',
+    couponApply:  '{{ url('/cart/coupon.json') }}',
+    couponRemove: '{{ url('/cart/coupon.json') }}',
+};
+</script>
+
+<script src="{{ asset('themes/default/assets/js/script.js') }}"></script>
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

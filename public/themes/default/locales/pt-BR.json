@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "theme_name": "Default Dark",
+    "theme_version": "2.0.0",
+    "theme_author": "Replicantfy"
+  },
+  "groups": [
+    {
+      "name": "Geral",
+      "settings": [
+        { "id": "hero_image",    "type": "image_picker", "label": "Imagem do Hero",          "default": "" },
+        { "id": "hero_title",    "type": "text",         "label": "Título do Hero",           "default": "Nova Coleção" },
+        { "id": "hero_subtitle", "type": "text",         "label": "Subtítulo do Hero",        "default": "Descubra as últimas tendências" },
+        { "id": "hero_cta",      "type": "text",         "label": "Texto do botão do Hero",   "default": "Confira agora" },
+        { "id": "hero_cta_url",  "type": "text",         "label": "Link do botão do Hero",    "default": "/produtos" }
+      ]
+    },
+    {
+      "name": "Barra de Anúncio",
+      "settings": [
+        { "id": "announcement_enabled", "type": "checkbox", "label": "Exibir barra de anúncio", "default": true },
+        { "id": "announcement_text",    "type": "text",     "label": "Texto do anúncio",         "default": "Frete grátis para todo o Brasil nas compras acima de R$ 199" }
+      ]
+    },
+    {
+      "name": "Barra de Benefícios",
+      "settings": [
+        { "id": "feature_1_title", "type": "text", "label": "Benefício 1 — Título",    "default": "Desconto na primeira compra" },
+        { "id": "feature_1_desc",  "type": "text", "label": "Benefício 1 — Descrição", "default": "Use o cupom PRIMEIRACOMPRA" },
+        { "id": "feature_2_title", "type": "text", "label": "Benefício 2 — Título",    "default": "Frete grátis" },
+        { "id": "feature_2_desc",  "type": "text", "label": "Benefício 2 — Descrição", "default": "Em compras acima de R$ 199" },
+        { "id": "feature_3_title", "type": "text", "label": "Benefício 3 — Título",    "default": "Troca fácil" },
+        { "id": "feature_3_desc",  "type": "text", "label": "Benefício 3 — Descrição", "default": "1ª troca grátis e sem burocracia" },
+        { "id": "feature_4_title", "type": "text", "label": "Benefício 4 — Título",    "default": "Parcelamento" },
+        { "id": "feature_4_desc",  "type": "text", "label": "Benefício 4 — Descrição", "default": "Em até 12x ou PIX com 5% OFF" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{% extends "layout/theme.twig" %}
+{% block title %}{{ product.name }} — Empório Cacau{% endblock %}
+
+{% block content %}
+<div class="container page-section">
+    {% include 'snippets/breadcrumb.twig' %}
+    <div class="product-page">
+        <div class="product-gallery">
+            {% set valid_images = product.images|filter(img => img.src) %}
+            {% if valid_images|length > 0 %}
+                <div class="product-gallery__main">
+                    <img src="{{ (valid_images|first).src|img_url }}" alt="{{ product.name }}" id="product-main-img" class="product-gallery__main-img">
+                </div>
+                {% if valid_images|length > 1 %}
+                    <div class="product-gallery__thumbs">
+                        {% for image in valid_images %}
+                            <button class="product-gallery__thumb {% if loop.first %}active{% endif %}" type="button"
+                                    data-product-image="{{ image.src|img_url }}" aria-label="Ver imagem {{ loop.index }}">
+                                <img src="{{ image.src|img_url }}" alt="">
+                            </button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="product-details">
+            <p class="product-details__condition">Novo | 270 Vendidos</p>
+            <h1 class="product-details__title">{{ product.name }}</h1>
+            <p class="product-card__rating"><span>★★★★★</span> <small>5.0 (2 Avaliações)</small></p>
+            <p class="product-details__label">Preço:</p>
+            {% if product.compare_at_price and product.compare_at_price > product.price %}
+                <p class="product-details__old">DE {{ product.compare_at_price|money }}</p>
+            {% endif %}
+            <div class="product-details__price">
+                <strong>{{ product.price|money }}</strong>
+                {% if product.compare_at_price and product.compare_at_price > product.price %}
+                    {% set pct = ((product.compare_at_price - product.price) / product.compare_at_price * 100)|round %}
+                    <span>↓ {{ pct }}%</span>
+                {% endif %}
+            </div>
+            <p class="product-details__installment">em até <strong>12x</strong> de <strong>{{ (product.price / 12)|money }}</strong> sem juros</p>
+            {% if product.compare_at_price and product.compare_at_price > product.price %}
+                <p class="product-details__saving">{{ (product.compare_at_price - product.price)|money }} de desconto</p>
+            {% endif %}
+
+            <div class="product-buy-row">
+                <label>Quantidade:</label>
+                <div class="quantity-control">
+                    <button type="button" id="qty-minus">−</button>
+                    <input id="quantity" type="number" min="1" max="99" value="1" aria-label="Quantidade">
+                    <button type="button" id="qty-plus">+</button>
+                </div>
+            </div>
+            <div class="product-benefits">
+                <p><strong>Frete Grátis</strong> • Disponível</p>
+                <p>↩ <strong>Devolução grátis.</strong> Até 7 dias a partir do recebimento</p>
+                <p>♢ <strong>Compra Garantida.</strong> Saia satisfeito ou devolvemos o dinheiro</p>
+                <p>⚡ <strong>Mais vendido</strong> entre os produtos da coleção.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn--full" id="buy-now" data-product-id="{{ product.id }}">COMPRAR AGORA</button>
+
+            <div class="seller-card">
+                <img src="{{ asset('themes/default/assets/images/emporio/1782578207980.png') }}" alt="Empório Cacau">
+                <div><strong>Empório Cacau</strong><p>+8.729 Seguidores · +25 Produtos · +5.897 vendas</p></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="product-description">
+        <h2>DETALHES DO PRODUTO</h2>
+        <div>{{ product.description ? product.description|raw : 'Nenhuma descrição disponível para este produto.' }}</div>
+    </section>
+
+    <section class="reviews">
+        <h2>Avaliações de clientes</h2>
+        <div class="reviews-summary"><strong>5.0</strong><span>★★★★★<br><small>A partir de 2 Avaliações</small></span></div>
+        <article><strong>Bruna Pereira</strong><span>Verificado</span><p>Produto excelente, chegou bem embalado e antes do prazo.</p></article>
+        <article><strong>Rafael Santos</strong><span>Verificado</span><p>Chegou antes do dia e veio tudo certinho.</p></article>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    const quantity = document.getElementById('quantity');
+    document.getElementById('qty-minus')?.addEventListener('click', () => quantity.value = Math.max(1, Number(quantity.value) - 1));
+    document.getElementById('qty-plus')?.addEventListener('click', () => quantity.value = Number(quantity.value) + 1);
+    document.querySelectorAll('[data-product-image]').forEach(button => button.addEventListener('click', () => {
+        document.getElementById('product-main-img').src = button.dataset.productImage;
+        document.querySelectorAll('[data-product-image]').forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+    }));
+    document.getElementById('buy-now')?.addEventListener('click', async function () {
+        this.disabled = true;
+        await window.Cart.add({ product_id: Number(this.dataset.productId), quantity: Number(quantity.value) });
+        window.location.href = '{{ url('/carrinho') }}';
+    });
+})();
+</script>
+{% endblock %}

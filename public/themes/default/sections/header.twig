@@ -1,0 +1,42 @@
+<header class="site-header" id="site-header">
+    <div class="container header-inner">
+        <a href="{{ url('/') }}" class="site-logo" aria-label="Empório Cacau">
+            <img src="{{ asset('themes/default/assets/images/emporio/1782578207980.png') }}"
+                 alt="Empório Cacau" class="site-logo__image">
+        </a>
+
+        <form action="{{ url('/produtos') }}" method="get" class="header-search">
+            <label class="sr-only" for="site-search">Buscar produtos</label>
+            <input id="site-search" name="q" type="search" placeholder="O que está buscando?">
+            <button type="submit" aria-label="Buscar">⌕</button>
+        </form>
+
+        <div class="header-actions">
+            <a href="{{ auth_user ? url('/account') : url('/login') }}" class="header-action account-link">
+                <span class="header-action__icon">♙</span>
+                <span><small>{{ auth_user ? 'Olá' : 'Entrar / Cadastrar' }}</small><strong>Minha conta⌄</strong></span>
+            </a>
+            <a href="{{ auth_user ? url('/account/pedidos') : url('/login') }}" class="header-action">
+                <span class="header-action__icon">♧</span><strong>Rastrear Pedido</strong>
+            </a>
+            <a href="{{ url('/carrinho') }}" class="header-action cart-trigger" id="cart-link">
+                <span class="header-action__icon">♧</span><span class="cart-trigger__badge" id="cart-count">0</span><strong>Carrinho</strong>
+            </a>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <nav class="site-nav container" aria-label="Navegação principal">
+        <a href="{{ url('/') }}" class="site-nav__link">☰ Início</a>
+        {% for category in top_categories %}
+            <a href="{{ url('/colecao/' ~ category.slug) }}" class="site-nav__link">{{ category.name }}</a>
+        {% endfor %}
+    </nav>
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <a href="{{ url('/') }}">Início</a>
+        <a href="{{ url('/produtos') }}">Todos os produtos</a>
+        <a href="{{ url('/carrinho') }}">Carrinho</a>
+        <a href="{{ auth_user ? url('/account') : url('/login') }}">Minha conta</a>
+    </nav>
+</header>

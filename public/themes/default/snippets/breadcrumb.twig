@@ -1,0 +1,25 @@
+<nav class="breadcrumb" aria-label="Caminho de navegação">
+    <a href="{{ url('/') }}" class="breadcrumb__item">Home</a>
+    {% if category is defined and category %}
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <a href="{{ url('/produtos') }}" class="breadcrumb__item">Produtos</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+            {{ category.name }}
+        </span>
+    {% elseif product is defined and product %}
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        {% if product.category %}
+            <a href="{{ url('/colecao/' ~ product.category.slug) }}" class="breadcrumb__item">
+                {{ product.category.name }}
+            </a>
+            <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        {% else %}
+            <a href="{{ url('/produtos') }}" class="breadcrumb__item">Produtos</a>
+            <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        {% endif %}
+        <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+            {{ product.name }}
+        </span>
+    {% endif %}
+</nav>

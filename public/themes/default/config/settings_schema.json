@@ -1,0 +1,150 @@
+[
+    {
+        "name": "Informações da loja",
+        "settings": [
+            {
+                "type": "text",
+                "id": "store_name",
+                "label": "Nome da loja",
+                "default": "Minha Loja"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo"
+            },
+            {
+                "type": "image_picker",
+                "id": "favicon",
+                "label": "Favicon"
+            },
+            {
+                "type": "text",
+                "id": "meta_title",
+                "label": "Título SEO",
+                "default": "Minha Loja"
+            },
+            {
+                "type": "textarea",
+                "id": "meta_description",
+                "label": "Descrição SEO",
+                "default": "Sua loja online"
+            }
+        ]
+    },
+    {
+        "name": "Cores",
+        "settings": [
+            {
+                "type": "color",
+                "id": "color_primary",
+                "label": "Cor primária",
+                "default": "#1a1a2e"
+            },
+            {
+                "type": "color",
+                "id": "color_accent",
+                "label": "Cor de destaque",
+                "default": "#e94560"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Cor de fundo",
+                "default": "#f8f8f8"
+            },
+            {
+                "type": "color",
+                "id": "color_text",
+                "label": "Cor do texto",
+                "default": "#1a1a1a"
+            }
+        ]
+    },
+    {
+        "name": "Banner principal",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "hero_image",
+                "label": "Imagem do banner"
+            },
+            {
+                "type": "text",
+                "id": "hero_title",
+                "label": "Título do banner",
+                "default": "Bem-vindo à nossa loja"
+            },
+            {
+                "type": "text",
+                "id": "hero_subtitle",
+                "label": "Subtítulo",
+                "default": "Encontre os melhores produtos"
+            },
+            {
+                "type": "text",
+                "id": "hero_button_text",
+                "label": "Texto do botão",
+                "default": "Ver produtos"
+            },
+            {
+                "type": "text",
+                "id": "hero_button_url",
+                "label": "URL do botão",
+                "default": "/produtos"
+            }
+        ]
+    },
+    {
+        "name": "Rodapé",
+        "settings": [
+            {
+                "type": "textarea",
+                "id": "footer_about",
+                "label": "Sobre a loja",
+                "default": ""
+            },
+            {
+                "type": "text",
+                "id": "footer_email",
+                "label": "E-mail de contato",
+                "default": ""
+            },
+            {
+                "type": "text",
+                "id": "footer_phone",
+                "label": "Telefone",
+                "default": ""
+            }
+        ]
+    },
+    {
+        "name": "Redes sociais",
+        "settings": [
+            {
+                "type": "text",
+                "id": "social_instagram",
+                "label": "Instagram (URL)",
+                "default": ""
+            },
+            {
+                "type": "text",
+                "id": "social_facebook",
+                "label": "Facebook (URL)",
+                "default": ""
+            },
+            {
+                "type": "text",
+                "id": "social_whatsapp",
+                "label": "WhatsApp (número com DDD)",
+                "default": ""
+            },
+            {
+                "type": "text",
+                "id": "social_tiktok",
+                "label": "TikTok (URL)",
+                "default": ""
+            }
+        ]
+    }
+]

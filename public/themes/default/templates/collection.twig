@@ -1,0 +1,33 @@
+{% extends "layout/theme.twig" %}
+{% block title %}{% if category %}{{ category.name }} — {% endif %}Empório Cacau{% endblock %}
+
+{% block content %}
+<div class="container page-section">
+    {% include 'snippets/breadcrumb.twig' %}
+    <header class="collection-header">
+        <h1 class="page-title">{% if category %}{{ category.name }}{% elseif is_bestsellers %}Mais Vendidos{% else %}Todos os produtos{% endif %}</h1>
+        {% if category and category.description %}<p>{{ category.description }}</p>{% endif %}
+    </header>
+
+    <form method="get" class="collection-tools">
+        <span>{{ products.total ?? products|length }} produtos</span>
+        <label>Ordenar:
+            <select name="sort" onchange="this.form.submit()">
+                <option value="featured" {% if current_sort == 'featured' %}selected{% endif %}>Destaques</option>
+                <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Novidades</option>
+                <option value="price_asc" {% if current_sort == 'price_asc' %}selected{% endif %}>Menor preço</option>
+                <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>Maior preço</option>
+            </select>
+        </label>
+    </form>
+
+    {% if products|length > 0 %}
+        <div class="products-grid products-grid--four products-grid--wrap">
+            {% for product in products %}{% include 'snippets/product-card.twig' with { product: product } %}{% endfor %}
+        </div>
+        {% include 'snippets/pagination.twig' %}
+    {% else %}
+        <div class="empty-state-block"><p>Nenhum produto encontrado.</p><a class="btn btn-primary" href="{{ url('/produtos') }}">Ver todos</a></div>
+    {% endif %}
+</div>
+{% endblock %}

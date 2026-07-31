@@ -1,0 +1,5 @@
+{% if products.lastPage() > 1 %}
+<nav class="pagination" aria-label="Paginação">
+    {{ products.links()|raw }}
+</nav>
+{% endif %}

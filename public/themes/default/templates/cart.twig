@@ -1,0 +1,141 @@
+{% extends "layout/theme.twig" %}
+
+{% block title %}Carrinho — {{ settings.meta_title ?? 'Loja' }}{% endblock %}
+
+{% block content %}
+
+<div class="container page-section">
+    <h1 class="page-title">Carrinho de compras</h1>
+
+    {% if cart.items|length > 0 %}
+
+        <div class="cart-layout">
+
+            {# ── Itens ───────────────────────────────────────────── #}
+            <div class="cart-items" id="cart-items">
+                {% for key, item in cart.items %}
+                    <div class="cart-item" data-key="{{ key }}" id="cart-item-{{ key }}">
+
+                        <div class="cart-item__image">
+                            {% if item.image %}
+                                <img src="{{ item.image|img_url }}"
+                                     alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <div class="cart-item__image-placeholder" aria-hidden="true"></div>
+                            {% endif %}
+                        </div>
+
+                        <div class="cart-item__info">
+                            <a href="{{ url('/produto/' ~ item.slug) }}"
+                               class="cart-item__name">{{ item.name }}</a>
+                            {% if item.sku %}
+                                <p class="cart-item__sku">SKU: {{ item.sku }}</p>
+                            {% endif %}
+                            <p class="cart-item__unit-price">{{ item.price|money }} / un.</p>
+                        </div>
+
+                        <div class="cart-item__qty">
+                            <div class="quantity-control quantity-control--sm">
+                                <button class="quantity-control__btn"
+                                        onclick="Cart.updateItem('{{ key }}', {{ item.quantity - 1 }})"
+                                        aria-label="Diminuir">−</button>
+                                <span class="quantity-control__display">{{ item.quantity }}</span>
+                                <button class="quantity-control__btn"
+                                        onclick="Cart.updateItem('{{ key }}', {{ item.quantity + 1 }})"
+                                        aria-label="Aumentar">+</button>
+                            </div>
+                        </div>
+
+                        <div class="cart-item__subtotal">
+                            {{ (item.price * item.quantity)|money }}
+                        </div>
+
+                        <button class="cart-item__remove"
+                                onclick="Cart.removeItem('{{ key }}')"
+                                aria-label="Remover {{ item.name }}">
+                            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {# ── Resumo ──────────────────────────────────────────── #}
+            <div class="cart-summary" id="cart-summary">
+
+                <h2 class="cart-summary__title">Resumo do pedido</h2>
+
+                <div class="coupon-form">
+                    <label class="form-label" for="coupon-code">Cupom de desconto</label>
+                    <div class="coupon-form__row">
+                        <input type="text" id="coupon-code"
+                               placeholder="Código do cupom"
+                               class="input-text" autocomplete="off">
+                        <button class="btn btn-outline btn--sm" onclick="Cart.applyCoupon()">
+                            Aplicar
+                        </button>
+                    </div>
+                    <p id="coupon-message" class="coupon-message" aria-live="polite"></p>
+                </div>
+
+                <div class="cart-summary__lines">
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <span id="summary-subtotal">{{ cart.subtotal|money }}</span>
+                    </div>
+                    {% if cart.discount > 0 %}
+                        <div class="summary-line summary-line--discount" id="summary-discount-line">
+                            <span>
+                                Desconto
+                                {% if cart.coupon %}
+                                    <span class="coupon-badge">{{ cart.coupon.code }}</span>
+                                {% endif %}
+                            </span>
+                            <span id="summary-discount">− {{ cart.discount|money }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="summary-line summary-line--total">
+                        <span>Total</span>
+                        <span id="summary-total">{{ cart.total|money }}</span>
+                    </div>
+                </div>
+
+                <a href="{{ url('/checkout') }}" class="btn btn-primary btn--full">
+                    Finalizar compra
+                </a>
+                <a href="{{ url('/produtos') }}" class="btn btn-ghost btn--full">
+                    Continuar comprando
+                </a>
+
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="empty-state-block" id="cart-empty">
+            <svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <p>Seu carrinho está vazio.</p>
+            <a href="{{ url('/produtos') }}" class="btn btn-primary">Explorar produtos</a>
+        </div>
+
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.onCartUpdate = function (data) {
+    if (!data.items || Object.keys(data.items).length === 0) {
+        window.location.reload();
+        return;
+    }
+    window.location.reload();
+};
+</script>
+{% endblock %}

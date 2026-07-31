@@ -1,0 +1,31 @@
+{% extends "layout/theme.twig" %}
+{% set titles = {
+    'privacidade': 'Política de Privacidade',
+    'termos': 'Termos de Uso',
+    'trocas': 'Trocas e Devoluções'
+} %}
+{% block title %}{{ titles[page] }} — Empório Cacau{% endblock %}
+{% block content %}
+<article class="container page-section legal-page">
+    <h1 class="page-title">{{ titles[page] }}</h1>
+    {% if page == 'privacidade' %}
+        <p>A Empório Cacau respeita a sua privacidade e utiliza seus dados apenas para processar pedidos, prestar atendimento e melhorar a experiência de compra.</p>
+        <h2>Dados e segurança</h2>
+        <p>As informações de pagamento são protegidas por criptografia SSL. Não comercializamos dados pessoais com terceiros.</p>
+        <h2>Contato</h2>
+        <p>Para solicitar acesso, correção ou exclusão de dados, entre em contato pelo e-mail contato@emporiocacau.store.</p>
+    {% elseif page == 'termos' %}
+        <p>Ao utilizar esta loja, você concorda em fornecer informações verdadeiras para cadastro, pagamento e entrega dos pedidos.</p>
+        <h2>Pedidos e preços</h2>
+        <p>Os pedidos estão sujeitos à confirmação de pagamento e disponibilidade de estoque. Preços e promoções podem ser atualizados sem aviso prévio.</p>
+        <h2>Atendimento</h2>
+        <p>Em caso de dúvida, fale com a equipe Empório Cacau pelos canais indicados no site.</p>
+    {% else %}
+        <p>Você pode solicitar troca ou devolução em até 7 dias corridos após o recebimento, conforme a legislação aplicável.</p>
+        <h2>Como solicitar</h2>
+        <p>Entre em contato informando o número do pedido e o motivo. O produto deve ser devolvido com embalagem e itens recebidos.</p>
+        <h2>Reembolso</h2>
+        <p>Após a conferência do produto, o reembolso será realizado pelo mesmo meio de pagamento utilizado na compra.</p>
+    {% endif %}
+</article>
+{% endblock %}
